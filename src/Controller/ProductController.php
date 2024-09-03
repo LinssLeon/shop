@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/ProductController.php
-
 namespace App\Controller;
 
 use App\Entity\Product;
@@ -40,6 +38,15 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Debugging: Überprüfe die gesendeten Daten
+            dump($request->request->all());
+            dump($product);
+
+            // Sicherstellen, dass category_id gesetzt ist
+            if ($product->getCategory() === null) {
+                throw new \Exception('Category is not set');
+            }
+
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute('product_index');

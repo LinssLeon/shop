@@ -10,3 +10,11 @@ admin:
     resource: "../src/Controller/Admin/"
     type: attribute
     prefix: /admin
+
+admin_product_index:
+    path: /admin/product
+    controller: App\Controller\Admin\ProductCrudController::index
+
+admin_product_new:
+    path: /admin/product/new
+    controller: App\Controller\Admin\ProductCrudController::new

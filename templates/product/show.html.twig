@@ -1,0 +1,17 @@
+{# templates/product/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ product.name }}
+{% endblock %}
+
+{% block body %}
+	<h1>{{ product.name }}</h1>
+	<p>{{ product.description }}</p>
+	<p>Price:
+		{{ product.price }}</p>
+	{% if product.image %}
+		<img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
+	{% endif %}
+	<a href="{{ path('home') }}">Back to product list</a>
+{% endblock %}
