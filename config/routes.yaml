@@ -1,8 +1,12 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+    resource: "../src/Controller/"
     type: attribute
+
 home:
     path: /
     controller: App\Controller\HomeController::index
+
+admin:
+    resource: "../src/Controller/Admin/"
+    type: attribute
+    prefix: /admin
