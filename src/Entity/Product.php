@@ -24,7 +24,7 @@ class Product
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private ?float $price = null;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]

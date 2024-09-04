@@ -9,7 +9,7 @@
 	<h1>{{ product.name }}</h1>
 	<p>{{ product.description }}</p>
 	<p>Price:
-		{{ product.price }}</p>
+		{{ product.price | number_format(2, ',', '.') }}€</p>
 	{% if product.image %}
 		<img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}">
 	{% endif %}
