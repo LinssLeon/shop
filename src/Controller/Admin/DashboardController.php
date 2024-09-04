@@ -1,5 +1,5 @@
 <?php
-// src/Controller/Admin/DashboardController.php
+
 namespace App\Controller\Admin;
 
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -23,7 +23,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('My Shop Admin');
+            ->setTitle('My Shop Admin')
+            ->setFaviconPath('images/favicon.ico'); // Set the favicon path here
     }
 
     public function configureMenuItems(): iterable
