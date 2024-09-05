@@ -20,7 +20,7 @@ security:
                 login_path: login
                 check_path: login
             logout:
-                path: logout
+                path: app_logout
                 target: /
 
     access_control:
