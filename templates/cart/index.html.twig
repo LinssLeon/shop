@@ -1,41 +1,49 @@
+{# templates/cart/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Warenkorb
 {% endblock %}
 
 {% block body %}
-	<section class="py-5">
-		<div class="container px-4 px-lg-5 my-5">
-			<h1 class="text-center">Dein Einkaufswagen</h1>
-			{% if cart|length > 0 %}
-				<table class="table">
-					<thead>
+	<div class="container mt-5">
+		<h2>Dein Warenkorb</h2>
+		<a href="{{ path('home') }}" class="btn btn-secondary mt-3">Weiter einkaufen</a>
+
+
+		{% if cart is empty %}
+			<p>Dein Warenkorb ist leer.</p>
+		{% else %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Produkt</th>
+						<th>Preis</th>
+						<th>Menge</th>
+						<th>Gesamt</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for id, item in cart %}
 						<tr>
-							<th>Produkt</th>
-							<th>Preis</th>
-							<th>Menge</th>
-							<th>Gesamt</th>
+							<td>{{ item.name }}</td>
+							<td>{{ item.price|number_format(2, ',', '.') }}
+								€</td>
+							<td>{{ item.quantity }}</td>
+							<td>{{ (item.price * item.quantity)|number_format(2, ',', '.') }}
+								€</td>
+							<td>
+								<a href="{{ path('cart_remove', {id: id}) }}" class="btn btn-danger">Entfernen</a>
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-						{% for item in cart %}
-							<tr>
-								<td>{{ item.name }}</td>
-								<td>{{ item.price|number_format(2, ',', '.') }}€</td>
-								<td>{{ item.quantity }}</td>
-								<td>{{ (item.price * item.quantity)|number_format(2, ',', '.') }}€</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-				<div class="text-end">
-					<h3>Gesamtsumme:
-						{{ total|number_format(2, ',', '.') }}€</h3>
-					<a class="btn btn-primary" href="#">Zur Kasse</a>
-				</div>
-			{% else %}
-				<p class="text-center">Dein Warenkorb ist leer.</p>
-			{% endif %}
-		</div>
-	</section>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<h4>Gesamtsumme:
+				{{ total|number_format(2, ',', '.') }}
+				€</h4>
+		{% endif %}
+	</div>
 {% endblock %}

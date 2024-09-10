@@ -8,11 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(Request $request, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
+    public function index(Request $request, ProductRepository $productRepository, CategoryRepository $categoryRepository, SessionInterface $session): Response
     {
         // Hole ausgewählte Kategorien, sollte ein Array sein
         $selectedCategories = $request->query->all('categories');
@@ -30,11 +31,16 @@ class HomeController extends AbstractController
         // Alle Kategorien für den Filter holen
         $categories = $categoryRepository->findAll();
 
+        // Einkaufswagen-Logik: Anzahl der Artikel im Warenkorb holen
+        $cart = $session->get('cart', []);
+        $cartQuantity = array_sum($cart); // Anzahl der Artikel im Warenkorb
+
         // Daten an das Template übergeben
         return $this->render('home/index.html.twig', [
             'products' => $products,
             'categories' => $categories,
             'selectedCategories' => $selectedCategories,
+            'cartQuantity' => $cartQuantity, // Anzahl der Artikel im Warenkorb
         ]);
     }
 }
