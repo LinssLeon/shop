@@ -10,7 +10,6 @@
 		<h2>Dein Warenkorb</h2>
 		<a href="{{ path('home') }}" class="btn btn-secondary mt-3">Weiter einkaufen</a>
 
-
 		{% if cart is empty %}
 			<p>Dein Warenkorb ist leer.</p>
 		{% else %}
@@ -30,11 +29,20 @@
 							<td>{{ item.name }}</td>
 							<td>{{ item.price|number_format(2, ',', '.') }}
 								€</td>
-							<td>{{ item.quantity }}</td>
+							<td>
+								<form action="{{ path('cart_update', {id: id}) }}" method="post" class="d-inline">
+									<input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control d-inline" style="width: 80px;">
+									<button type="submit" class="btn btn-primary">Aktualisieren</button>
+								</form>
+							</td>
 							<td>{{ (item.price * item.quantity)|number_format(2, ',', '.') }}
 								€</td>
 							<td>
-								<a href="{{ path('cart_remove', {id: id}) }}" class="btn btn-danger">Entfernen</a>
+								<form action="{{ path('cart_remove_quantity', {id: id}) }}" method="post" class="d-inline">
+									<input type="number" name="quantity" value="1" min="1" max="{{ item.quantity }}" class="form-control d-inline" style="width: 80px;">
+									<button type="submit" class="btn btn-warning">Entfernen</button>
+								</form>
+								<a href="{{ path('cart_remove', {id: id}) }}" class="btn btn-danger">Alle entfernen</a>
 							</td>
 						</tr>
 					{% endfor %}

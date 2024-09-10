@@ -81,4 +81,54 @@ class CartController extends BaseController
 
         return $this->redirectToRoute('cart');
     }
+
+    #[Route('/cart/remove_quantity/{id}', name: 'cart_remove_quantity')]
+    public function removeQuantity(int $id, Request $request, SessionInterface $session): Response
+    {
+        // Warenkorb aus der Session holen
+        $cart = $session->get('cart', []);
+
+        // Menge aus dem Request holen
+        $quantity = $request->request->getInt('quantity', 1);
+
+        // Prüfen, ob das Produkt existiert und die Menge reduzieren
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] -= $quantity;
+
+            // Wenn die Menge 0 oder weniger ist, das Produkt entfernen
+            if ($cart[$id]['quantity'] <= 0) {
+                unset($cart[$id]);
+            }
+        }
+
+        // Warenkorb zurück in die Session speichern
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('cart');
+    }
+
+    #[Route('/cart/update/{id}', name: 'cart_update')]
+    public function update(int $id, Request $request, SessionInterface $session): Response
+    {
+        // Warenkorb aus der Session holen
+        $cart = $session->get('cart', []);
+
+        // Menge aus dem Request holen
+        $quantity = $request->request->getInt('quantity', 1);
+
+        // Prüfen, ob das Produkt existiert und die Menge aktualisieren
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] = $quantity;
+
+            // Wenn die Menge 0 oder weniger ist, das Produkt entfernen
+            if ($cart[$id]['quantity'] <= 0) {
+                unset($cart[$id]);
+            }
+        }
+
+        // Warenkorb zurück in die Session speichern
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('cart');
+    }
 }
