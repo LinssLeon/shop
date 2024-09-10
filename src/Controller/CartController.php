@@ -5,12 +5,11 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CartController extends AbstractController
+class CartController extends BaseController
 {
     #[Route('/cart', name: 'cart')]
     public function index(SessionInterface $session): Response
@@ -23,7 +22,7 @@ class CartController extends AbstractController
             return $sum + ($item['price'] * $item['quantity']);
         }, 0);
 
-        $cartQuantity = array_sum($cart);
+        $cartQuantity = $this->getCartQuantity($session);
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,

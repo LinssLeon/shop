@@ -3,14 +3,13 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class HomeController extends AbstractController
+class HomeController extends BaseController
 {
     #[Route('/', name: 'home')]
     public function index(Request $request, ProductRepository $productRepository, CategoryRepository $categoryRepository, SessionInterface $session): Response
@@ -32,8 +31,7 @@ class HomeController extends AbstractController
         $categories = $categoryRepository->findAll();
 
         // Einkaufswagen-Logik: Anzahl der Artikel im Warenkorb holen
-        $cart = $session->get('cart', []);
-        $cartQuantity = array_sum($cart); // Anzahl der Artikel im Warenkorb
+        $cartQuantity = $this->getCartQuantity($session);
 
         // Daten an das Template übergeben
         return $this->render('home/index.html.twig', [
