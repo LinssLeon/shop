@@ -22,7 +22,7 @@ security:
                 default_target_path: home
             logout:
                 path: app_logout
-                target: /
+                target: app_login
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }

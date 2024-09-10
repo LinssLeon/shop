@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SecurityController extends BaseController
+class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, SessionInterface $session): Response
@@ -32,5 +33,17 @@ class SecurityController extends BaseController
     {
         // controller can be blank: it will never be executed!
         // Symfony will intercept this route and handle the logout automatically
+    }
+
+    private function getCartQuantity(SessionInterface $session): int
+    {
+        $cart = $session->get('cart', []);
+        $quantity = 0;
+
+        foreach ($cart as $item) {
+            $quantity += $item['quantity'];
+        }
+
+        return $quantity;
     }
 }

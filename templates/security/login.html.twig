@@ -1,46 +1,38 @@
+{# templates/security/login.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in
+{% block title %}Einloggen
 {% endblock %}
 
 {% block body %}
-
 	<div class="container mt-5 d-flex flex-column min-vh-100">
-		<h2 class="text-center">Log in</h2>
+		<h2 class="text-center">Einloggen</h2>
 		<div class="row justify-content-center flex-grow-1">
 			<div class="col-md-6">
 				{% if error %}
-					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					<div class="alert alert-danger">
+						{{ error.messageKey|trans(error.messageData, 'security') }}
+					</div>
 				{% endif %}
-
 				<form action="{{ path('app_login') }}" method="post">
 					<div class="form-group">
-						<label for="username">Email:</label>
-						<input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus class="form-control">
+						<label for="username">Benutzername</label>
+						<input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" required autofocus>
 					</div>
-
 					<div class="form-group mt-3">
-						<label for="password">Password:</label>
-						<input type="password" id="password" name="_password" required class="form-control">
+						<label for="password">Passwort</label>
+						<input type="password" id="password" name="_password" class="form-control" required>
 					</div>
-
-					<div class="form-group mt-4">
-						<button type="submit" class="btn btn-primary w-100">Log in</button>
+					<div class="form-group mt-3">
+						<input type="checkbox" id="remember_me" name="_remember_me">
+						<label for="remember_me">Angemeldet bleiben</label>
+					</div>
+					<div class="form-group mt-3">
+						<button type="submit" class="btn btn-primary">Einloggen</button>
 					</div>
 				</form>
-
-				<div class="form-group mt-4">
-					<a href="/" class="btn btn-secondary w-100">Zurück</a>
-				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- Footer -->
-	<footer class="py-5 bg-dark mt-auto w-100">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Online Shop
-				{{ "now"|date("Y") }}</p>
-		</div>
-	</footer>
 {% endblock %}

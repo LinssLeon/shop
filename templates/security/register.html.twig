@@ -1,59 +1,11 @@
+{# templates/security/register.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Registrieren
 {% endblock %}
 
 {% block body %}
-	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light py-4 position-relative" style="z-index: 1;">
-		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="/">Online Shop</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#!">About</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li>
-								<a class="dropdown-item" href="#!">All Products</a>
-							</li>
-							<li><hr class="dropdown-divider"/></li>
-							<li>
-								<a class="dropdown-item" href="#!">Popular Items</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#!">New Arrivals</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<form class="d-flex">
-					{% if app.user %}
-						<span class="navbar-text me-2">Eingeloggt als
-							{{ app.user.email }}</span>
-						<a class="btn btn-outline-dark me-2" href="{{ path('app_logout') }}">Logout</a>
-					{% else %}
-						<a class="btn btn-outline-dark me-2" href="/login">Einloggen</a>
-						<a class="btn btn-outline-dark me-2" href="/register">Registrieren</a>
-					{% endif %}
-					<a class="btn btn-outline-dark" href="{{ path('cart') }}">
-						<i class="bi-cart-fill me-1"></i>
-						Einkaufswagen
-						<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-					</a>
-				</form>
-			</div>
-		</div>
-	</nav>
-
 	<div class="container mt-5 d-flex flex-column min-vh-100">
 		<h2 class="text-center">Registrieren</h2>
 		<div class="row justify-content-center flex-grow-1">
@@ -62,6 +14,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
+							<br>
 							{{ form_label(registrationForm.firstName, 'Vorname') }}
 							{{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
 							{{ form_errors(registrationForm.firstName) }}
@@ -74,61 +27,30 @@
 						</div>
 
 						<div class="form-group mt-3">
-							{{ form_label(registrationForm.email, 'E-Mail-Adresse') }}
+							{{ form_label(registrationForm.email, 'E-Mail') }}
 							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
 							{{ form_errors(registrationForm.email) }}
 						</div>
-
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.plainPassword.first, 'Passwort') }}
-							{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
-							{{ form_errors(registrationForm.plainPassword.first) }}
-						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group mt-3 mt-md-0">
-							{{ form_label(registrationForm.plainPassword.second, 'Passwort wiederholen') }}
-							{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
-							{{ form_errors(registrationForm.plainPassword.second) }}
+						<div class="form-group mt-3">
+							{{ form_label(registrationForm.plainPassword, 'Passwort') }}
+							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.plainPassword) }}
 						</div>
 
 						<div class="form-group mt-3">
-							{{ form_label(registrationForm.address, 'Adresse') }}
-							{{ form_widget(registrationForm.address, {'attr': {'class': 'form-control'}}) }}
-							{{ form_errors(registrationForm.address) }}
-						</div>
-
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.postalCode, 'Postleitzahl') }}
-							{{ form_widget(registrationForm.postalCode, {'attr': {'class': 'form-control'}}) }}
-							{{ form_errors(registrationForm.postalCode) }}
-						</div>
-
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.city, 'Stadt') }}
-							{{ form_widget(registrationForm.city, {'attr': {'class': 'form-control'}}) }}
-							{{ form_errors(registrationForm.city) }}
+							{{ form_label(registrationForm.agreeTerms, 'AGB akzeptieren') }}
+							{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+							{{ form_errors(registrationForm.agreeTerms) }}
 						</div>
 					</div>
 				</div>
-
-				<div class="form-group mt-4">
-					<button type="submit" class="btn btn-primary w-100">Registrieren</button>
+				<div class="form-group mt-3">
+					<button type="submit" class="btn btn-primary">Registrieren</button>
 				</div>
 				{{ form_end(registrationForm) }}
-
-				<div class="form-group mt-4">
-					<a href="/" class="btn btn-secondary w-100">Zurück</a>
-				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- Footer -->
-	<footer class="py-5 bg-dark mt-auto w-100">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Online Shop
-				{{ "now"|date("Y") }}</p>
-		</div>
-	</footer>
 {% endblock %}
