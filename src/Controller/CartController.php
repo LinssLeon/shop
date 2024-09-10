@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +33,7 @@ class CartController extends BaseController
     }
 
     #[Route('/cart/add/{id}', name: 'cart_add')]
-    public function add(int $id, SessionInterface $session, EntityManagerInterface $entityManager): Response
+    public function add(int $id, Request $request, SessionInterface $session, EntityManagerInterface $entityManager): Response
     {
         // Produkt aus der Datenbank holen
         $product = $entityManager->getRepository(Product::class)->find($id);
@@ -44,15 +45,17 @@ class CartController extends BaseController
         // Warenkorb aus der Session holen oder einen neuen erstellen
         $cart = $session->get('cart', []);
 
+        $quantity = $request->request->getInt('quantity', 1);
+
         // Wenn das Produkt schon im Warenkorb ist, Menge erhöhen
         if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+            $cart[$id]['quantity'] += $quantity;
         } else {
             // Neues Produkt hinzufügen
             $cart[$id] = [
                 'name' => $product->getName(),
                 'price' => $product->getPrice(),
-                'quantity' => 1,
+                'quantity' => $quantity,
             ];
         }
 
