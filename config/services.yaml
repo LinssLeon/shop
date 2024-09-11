@@ -27,3 +27,9 @@ services:
             $security: "@security.helper"
             $cartItemRepository: '@App\Repository\CartItemRepository'
             $productRepository: '@App\Repository\ProductRepository'
+
+    App\Twig\AppExtension:
+        arguments:
+            $cartService: '@App\Service\CartService'
+        tags:
+            - { name: "twig.extension" }

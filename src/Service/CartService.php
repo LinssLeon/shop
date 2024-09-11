@@ -110,4 +110,19 @@ class CartService
 
         $this->em->flush();
     }
+
+    public function getCartQuantity(): int
+    {
+        $user = $this->security->getUser();
+        if (!$user) {
+            return 0;
+        }
+
+        $cartItems = $this->cartItemRepository->findBy(['customer' => $user]);
+        $cartQuantity = array_reduce($cartItems, function ($carry, $item) {
+            return $carry + $item->getQuantity();
+        }, 0);
+
+        return $cartQuantity;
+    }
 }
