@@ -20,7 +20,7 @@
 					<p class="lead">{{ product.description }}</p>
 					<p class="price">Price:
 						{{ product.price | number_format(2, ',', '.') }}€</p>
-					<form action="{{ path('cart_add', { 'id': product.id }) }}" method="post">
+					<form action="{{ path('cart_add', { 'productId': product.id }) }}" method="post">
 						<div class="mb-3">
 							<label for="quantity" class="form-label">Quantity</label>
 							<input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1" style="max-width: 80px;">

@@ -31,18 +31,36 @@
 							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
 							{{ form_errors(registrationForm.email) }}
 						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(registrationForm.address, 'Adresse') }}
+							{{ form_widget(registrationForm.address, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.address) }}
+						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.plainPassword, 'Passwort') }}
-							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
-							{{ form_errors(registrationForm.plainPassword) }}
+						<div class="form-group mt-4">
+							{{ form_label(registrationForm.postalCode, 'Postleitzahl') }}
+							{{ form_widget(registrationForm.postalCode, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.postalCode) }}
 						</div>
 
 						<div class="form-group mt-3">
-							{{ form_label(registrationForm.agreeTerms, 'AGB akzeptieren') }}
-							{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-							{{ form_errors(registrationForm.agreeTerms) }}
+							{{ form_label(registrationForm.city, 'Stadt') }}
+							{{ form_widget(registrationForm.city, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.city) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(registrationForm.plainPassword.first, 'Passwort') }}
+							{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.plainPassword.first) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(registrationForm.plainPassword.second, 'Passwort wiederholen') }}
+							{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(registrationForm.plainPassword.second) }}
 						</div>
 					</div>
 				</div>

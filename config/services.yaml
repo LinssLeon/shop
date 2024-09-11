@@ -20,3 +20,10 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    App\Service\CartService:
+        arguments:
+            $em: "@doctrine.orm.entity_manager"
+            $security: "@security.helper"
+            $cartItemRepository: '@App\Repository\CartItemRepository'
+            $productRepository: '@App\Repository\ProductRepository'
