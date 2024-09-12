@@ -13,7 +13,7 @@
 				<div class="col-md-2 bg-dark position-fixed h-100" style="left: 0; top: 0; z-index: 0;"></div>
 				<!-- Sidebar for Filters -->
 				<div class="col-md-2 offset-md-2" style="margin-top: -75px;">
-					<h5>Filter by Category</h5>
+					<h5>Filter:</h5>
 					<form method="get" action="{{ path('home') }}">
 						{% for category in categories %}
 							<div class="form-check">
@@ -23,7 +23,7 @@
 								</label>
 							</div>
 						{% endfor %}
-						<button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
+						<button type="submit" class="btn btn-primary mt-2">Filter anwenden</button>
 					</form>
 				</div>
 				<!-- Product List -->
@@ -58,7 +58,7 @@
 								</div>
 							</div>
 						{% else %}
-							<p>No products available.</p>
+							<p>Keine Produkte verfügbar.</p>
 						{% endfor %}
 					</div>
 				</div>

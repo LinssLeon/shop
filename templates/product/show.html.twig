@@ -18,16 +18,16 @@
 				<div class="col-lg-6">
 					<h1 class="display-4 fw-bolder">{{ product.name }}</h1>
 					<p class="lead">{{ product.description }}</p>
-					<p class="price">Price:
+					<p class="price">Preis:
 						{{ product.price | number_format(2, ',', '.') }}€</p>
 					<form action="{{ path('cart_add', { 'productId': product.id }) }}" method="post">
 						<div class="mb-3">
-							<label for="quantity" class="form-label">Quantity</label>
+							<label for="quantity" class="form-label">Menge:</label>
 							<input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1" style="max-width: 80px;">
 						</div>
-						<button type="submit" class="btn btn-outline-dark">Add to Cart</button>
+						<button type="submit" class="btn btn-outline-dark">In den Warenkorb</button>
 					</form>
-					<a href="{{ path('home') }}" class="btn btn-secondary mt-3">Back to product list</a>
+					<a href="{{ path('home') }}" class="btn btn-secondary mt-3">Zurück zur Produktauswahl</a>
 				</div>
 			</div>
 		</div>
