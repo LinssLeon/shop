@@ -4,73 +4,41 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Section -->
-	<section class="py-5 bg-light">
-		<div class="container-fluid px-4 px-lg-5 mt-5">
-			<div
-				class="row">
-				<!-- Vertical background stripe -->
-				<div class="col-md-2 bg-dark position-fixed h-100" style="left: 0; top: 0; z-index: 0;"></div>
-				<!-- Sidebar for Filters -->
-				<div class="col-md-2 offset-md-2" style="margin-top: -75px;">
-					<h5>Filter:</h5>
-					<form method="get" action="{{ path('home') }}">
-						{% for category in categories %}
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" name="categories[]" value="{{ category.id }}" id="category{{ category.id }}" {% if category.id in selectedCategories %} checked {% endif %}>
-								<label class="form-check-label" for="category{{ category.id }}">
-									{{ category.name }}
-									({{ categoryCounts[category.id] }})
-								</label>
-							</div>
-						{% endfor %}
-						<button type="submit" class="btn btn-primary mt-2">Filter anwenden</button>
-					</form>
-				</div>
-				<!-- Product List -->
-				<div class="col-md-8 offset-md-4" style="margin-top: -225px;">
-					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
-						{% for product in products %}
-							<div class="col mb-5">
-								<div
-									class="card h-100">
-									<!-- Product image -->
-									{% if product.image %}
-										<img class="card-img-top img-fluid" src="{{ asset('uploads/images/products/' ~ product.image) }}" alt="{{ product.name }}" style="max-height: 300px; object-fit: cover;">
-									{% else %}
-										<img class="card-img-top img-fluid" src="{{ asset('images/default-product.jpg') }}" alt="No image available" style="max-height: 300px; object-fit: cover;">
-									{% endif %}
-									<!-- Product details -->
-									<div class="card-body p-4">
-										<div
-											class="text-center">
-											<!-- Product name -->
-											<h5 class="fw-bolder">{{ product.name }}</h5>
-											<!-- Product price -->
-											{{ product.price|number_format(2, ',', '.') }}€
-										</div>
-									</div>
-									<!-- Product actions -->
-									<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-										<div class="text-center">
-											<a class="btn btn-outline-dark mt-auto" href="{{ path('product_show', { 'id': product.id }) }}">Zum Produkt</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						{% else %}
-							<p>Keine Produkte verfügbar.</p>
-						{% endfor %}
+	<!-- Willkommensnachricht -->
+	<div class="text-center p-5" style="background-color: #343a40; color: white;">
+		<h1>Willkommen in unserem Online-Shop!</h1>
+		<p class="lead">Entdecken Sie unsere exklusiven Angebote und besonderen Produkte.</p>
+	</div>
+
+	<!-- Slideshow für Featured-Produkte -->
+	<div id="featuredProductsCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			{% for product in featuredProducts %}
+				<div class="carousel-item {% if loop.first %}active{% endif %}">
+					<a href="{{ path('product_show', { 'id': product.id }) }}">
+						<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="d-block w-100" style="object-fit: contain; max-height: 400px;" alt="{{ product.name }}">
+					</a>
+					<div class="carousel-caption d-md-block text-dark bg-light p-3" style="position: static; border-radius: 10px;">
+						<h5>{{ product.name }}</h5>
+						<p>{{ product.price|number_format(2, ',', '.') }}€</p>
+						<a class="btn btn-primary mt-3" href="{{ path('product_show', { 'id': product.id }) }}">Zum Produkt</a>
 					</div>
 				</div>
-			</div>
+			{% endfor %}
 		</div>
-	</section>
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Online Shop
-				{{ "now"|date("Y") }}</p>
+		<button class="carousel-control-prev" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="prev" style="z-index: 11; background-color: transparent; border: none;">
+			<span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black; width: 30px; height: 30px;"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="next" style="z-index: 11; background-color: transparent; border: none;">
+			<span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black; width: 30px; height: 30px;"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+		<!-- Indikatoren -->
+		<div class="carousel-indicators" style="position: static; margin-top: 10px;">
+			{% for product in featuredProducts %}
+				<button type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}" aria-current="{% if loop.first %}true{% endif %}" aria-label="Slide {{ loop.index }}" style="background-color: #343a40;"></button>
+			{% endfor %}
 		</div>
-	</footer>
+	</div>
 {% endblock %}

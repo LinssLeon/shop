@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -32,6 +33,8 @@ class ProductCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_NEW, 'Create New Product'); // Set title for the new product page
     }
 
+    // src/Controller/Admin/ProductCrudController.php
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -47,8 +50,10 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir('public/uploads/images/products')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
+            BooleanField::new('isFeatured', 'Featured Product'),
         ];
     }
+
 
     // Add filters for better search functionality
     public function configureFilters(Filters $filters): Filters

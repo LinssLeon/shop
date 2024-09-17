@@ -1,14 +1,69 @@
-{# templates/product/new.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Produkte verwalten
+{% block title %}Alle Produkte
 {% endblock %}
 
 {% block body %}
-	<h1>Neues Produkt erstellen</h1>
+	<div class="bg-dark text-white py-5">
+		<div class="container mt-5">
+			<h1 class="mb-4 text-center">Alle Produkte</h1>
 
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<button class="btn">{{ button_label|default('Save') }}</button>
-	{{ form_end(form) }}
+			<!-- Optional: Filterformular -->
+			<form method="get" action="{{ path('product_index') }}" class="mb-4">
+				<div class="row">
+					<div class="col-md-4">
+						<select name="category" class="form-select">
+							<option value="">Alle Kategorien</option>
+							{% for category in categories %}
+								<option value="{{ category.id }}" {% if app.request.query.get('category') == category.id %} selected {% endif %}>
+									{{ category.name }}
+								</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="col-md-2">
+						<button type="submit" class="btn btn-primary">Filtern</button>
+					</div>
+				</div>
+			</form>
+
+			{% if selectedCategory %}
+				<h2 class="text-center my-4">{{ selectedCategory.name }}</h2>
+				<div class="row">
+					{% for product in products %}
+						<div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
+							<div class="card h-100 d-flex flex-column text-center bg-light text-dark">
+								<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+								<div class="card-body d-flex flex-column">
+									<h5 class="card-title">{{ product.name }}</h5>
+									<p class="card-text">{{ product.price|number_format(2, ',', '.') }}€</p>
+									<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-primary mt-auto">Zum Produkt</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				{% for category in categories %}
+					<h2 class="text-center my-4">{{ category.name }}</h2>
+					<div class="row">
+						{% for product in products %}
+							{% if product.category.id == category.id %}
+								<div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
+									<div class="card h-100 d-flex flex-column text-center bg-light text-dark">
+										<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+										<div class="card-body d-flex flex-column">
+											<h5 class="card-title">{{ product.name }}</h5>
+											<p class="card-text">{{ product.price|number_format(2, ',', '.') }}€</p>
+											<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-primary mt-auto">Zum Produkt</a>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}

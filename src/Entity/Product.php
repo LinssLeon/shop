@@ -46,6 +46,9 @@ class Product
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isFeatured = false;
+
     /**
      * @var Collection<int, CartItem>
      */
@@ -145,6 +148,17 @@ class Product
     {
         $this->updatedAt = $updatedAt;
 
+        return $this;
+    }
+
+    public function getIsFeatured(): bool
+    {
+        return $this->isFeatured;
+    }
+
+    public function setIsFeatured(bool $isFeatured): self
+    {
+        $this->isFeatured = $isFeatured;
         return $this;
     }
 
