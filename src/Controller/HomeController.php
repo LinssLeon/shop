@@ -30,6 +30,12 @@ class HomeController extends BaseController
         // Alle Kategorien für den Filter holen
         $categories = $categoryRepository->findAll();
 
+        // Anzahl der Produkte in jeder Kategorie berechnen
+        $categoryCounts = [];
+        foreach ($categories as $category) {
+            $categoryCounts[$category->getId()] = count($productRepository->findBy(['category' => $category]));
+        }
+
         // Einkaufswagen-Logik: Anzahl der Artikel im Warenkorb holen
         $cartQuantity = $this->getCartQuantity($session);
 
@@ -38,6 +44,7 @@ class HomeController extends BaseController
             'products' => $products,
             'categories' => $categories,
             'selectedCategories' => $selectedCategories,
+            'categoryCounts' => $categoryCounts, // Anzahl der Produkte in jeder Kategorie
             'cartQuantity' => $cartQuantity, // Anzahl der Artikel im Warenkorb
         ]);
     }
