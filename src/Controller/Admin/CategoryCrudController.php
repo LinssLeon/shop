@@ -18,9 +18,9 @@ class CategoryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Crud::PAGE_INDEX, 'Category Management')
-            ->setPageTitle(Crud::PAGE_EDIT, 'Edit Category')
-            ->setPageTitle(Crud::PAGE_NEW, 'Add New Category');
+            ->setPageTitle(Crud::PAGE_INDEX, 'Kategorien verwalten')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Katgorie bearbeiten')
+            ->setPageTitle(Crud::PAGE_NEW, 'Neue Kategorie erstellen');
     }
 
     public function configureFields(string $pageName): iterable

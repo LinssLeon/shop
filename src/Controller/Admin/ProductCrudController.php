@@ -28,9 +28,9 @@ class ProductCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Crud::PAGE_INDEX, 'Manage Products') // Set title for the index page
-            ->setPageTitle(Crud::PAGE_EDIT, 'Edit Product') // Set title for the edit page
-            ->setPageTitle(Crud::PAGE_NEW, 'Create New Product'); // Set title for the new product page
+            ->setPageTitle(Crud::PAGE_INDEX, 'Produkte Verwalten') // Set title for the index page
+            ->setPageTitle(Crud::PAGE_EDIT, 'Produkte bearbeiten') // Set title for the edit page
+            ->setPageTitle(Crud::PAGE_NEW, 'Neues Produkt erstellen'); // Set title for the new product page
     }
 
     // src/Controller/Admin/ProductCrudController.php
@@ -42,7 +42,7 @@ class ProductCrudController extends AbstractCrudController
             MoneyField::new('price')
                 ->setCurrency('EUR')
                 ->setStoredAsCents(false)
-                ->setHelp('Enter the price in EUR'),
+                ->setHelp('Bitte gebe den Preis in Euro an.'),
             TextareaField::new('description'),
             AssociationField::new('category'),
             ImageField::new('image')
@@ -50,7 +50,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setUploadDir('public/uploads/images/products')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            BooleanField::new('isFeatured', 'Featured Product'),
+            BooleanField::new('isFeatured', 'Besonderes Produkt'),
         ];
     }
 

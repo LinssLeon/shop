@@ -23,14 +23,14 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('My Shop Admin')
+            ->setTitle('Admin Übersicht')
             ->setFaviconPath('images/favicon.ico'); // Set the favicon path here
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Products', 'fas fa-box', Product::class);
-        yield MenuItem::linkToCrud('Categories', 'fas fa-tags', Category::class);
+        yield MenuItem::linkToDashboard('Übersicht', 'fa fa-home');
+        yield MenuItem::linkToCrud('Produkte', 'fas fa-box', Product::class);
+        yield MenuItem::linkToCrud('Kategorien', 'fas fa-tags', Category::class);
     }
 }
