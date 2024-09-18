@@ -24,7 +24,7 @@ class CreateUserCommand extends Command
         $this->passwordHasher = $passwordHasher;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:create-user') // Füge dies hinzu, um sicherzustellen, dass der Name gesetzt ist

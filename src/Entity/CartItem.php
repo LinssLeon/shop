@@ -14,11 +14,11 @@ class CartItem
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cartItems')]
+    #[ORM\JoinColumn(name: 'customer_id', nullable: false)]
     private ?User $customer = null;
 
-    #[ORM\ManyToOne(targetEntity: Product::class)]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'cartItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 

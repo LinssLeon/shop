@@ -27,20 +27,20 @@ class CartService
 
     public function addToCart($productId, $quantity)
     {
-        $user = $this->security->getUser();
+        $customer = $this->security->getUser();
         $product = $this->productRepository->find($productId);
 
         if (!$product) {
             throw new \Exception('Product not found');
         }
 
-        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $user, 'product' => $product]);
+        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $customer, 'product' => $product]);
 
         if ($cartItem) {
             $cartItem->setQuantity($cartItem->getQuantity() + $quantity);
         } else {
             $cartItem = new CartItem();
-            $cartItem->setCustomer($user);
+            $cartItem->setCustomer($customer);
             $cartItem->setProduct($product);
             $cartItem->setQuantity($quantity);
             $this->em->persist($cartItem);
@@ -51,14 +51,14 @@ class CartService
 
     public function updateCart($productId, $quantity)
     {
-        $user = $this->security->getUser();
+        $customer = $this->security->getUser();
         $product = $this->productRepository->find($productId);
 
         if (!$product) {
             throw new \Exception('Product not found');
         }
 
-        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $user, 'product' => $product]);
+        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $customer, 'product' => $product]);
 
         if ($cartItem) {
             $cartItem->setQuantity($quantity);
@@ -68,14 +68,14 @@ class CartService
 
     public function getCartItems()
     {
-        $user = $this->security->getUser();
-        return $this->cartItemRepository->findBy(['customer' => $user]);
+        $customer = $this->security->getUser();
+        return $this->cartItemRepository->findBy(['customer' => $customer]);
     }
 
     public function removeFromCart($productId)
     {
-        $user = $this->security->getUser();
-        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $user, 'product' => $productId]);
+        $customer = $this->security->getUser();
+        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $customer, 'product' => $productId]);
 
         if ($cartItem) {
             $this->em->remove($cartItem);
@@ -85,8 +85,8 @@ class CartService
 
     public function removeQuantityFromCart($productId, $quantity)
     {
-        $user = $this->security->getUser();
-        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $user, 'product' => $productId]);
+        $customer = $this->security->getUser();
+        $cartItem = $this->cartItemRepository->findOneBy(['customer' => $customer, 'product' => $productId]);
 
         if ($cartItem) {
             $newQuantity = $cartItem->getQuantity() - $quantity;
@@ -101,8 +101,8 @@ class CartService
 
     public function clearCart()
     {
-        $user = $this->security->getUser();
-        $cartItems = $this->cartItemRepository->findBy(['customer' => $user]);
+        $customer = $this->security->getUser();
+        $cartItems = $this->cartItemRepository->findBy(['customer' => $customer]);
 
         foreach ($cartItems as $cartItem) {
             $this->em->remove($cartItem);
@@ -113,12 +113,12 @@ class CartService
 
     public function getCartQuantity(): int
     {
-        $user = $this->security->getUser();
-        if (!$user) {
+        $customer = $this->security->getUser();
+        if (!$customer) {
             return 0;
         }
 
-        $cartItems = $this->cartItemRepository->findBy(['customer' => $user]);
+        $cartItems = $this->cartItemRepository->findBy(['customer' => $customer]);
         $cartQuantity = array_reduce($cartItems, function ($carry, $item) {
             return $carry + $item->getQuantity();
         }, 0);

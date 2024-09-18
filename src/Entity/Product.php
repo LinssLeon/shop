@@ -27,7 +27,7 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private ?float $price = null;
+    private ?string $price = null;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
@@ -52,7 +52,7 @@ class Product
     /**
      * @var Collection<int, CartItem>
      */
-    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'Product')]
+    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'product')]
     private Collection $cartItems;
 
     public function __construct()

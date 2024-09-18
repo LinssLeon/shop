@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Konto
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 d-flex flex-column min-vh-100">
+		<h2 class="text-center">Konto</h2>
+		<div class="row justify-content-center flex-grow-1">
+			<div class="col-md-8">
+				{{ form_start(form) }}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<br>
+							{{ form_label(form.firstName, 'Vorname') }}
+							{{ form_widget(form.firstName, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.firstName) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(form.lastName, 'Nachname') }}
+							{{ form_widget(form.lastName, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.lastName) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(form.email, 'E-Mail') }}
+							{{ form_widget(form.email, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.email) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(form.address, 'Adresse') }}
+							{{ form_widget(form.address, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.address) }}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group mt-4">
+							{{ form_label(form.postalCode, 'Postleitzahl') }}
+							{{ form_widget(form.postalCode, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.postalCode) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(form.city, 'Stadt') }}
+							{{ form_widget(form.city, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.city) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(form.plainPassword.first, 'Passwort') }}
+							{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.plainPassword.first) }}
+						</div>
+
+						<div class="form-group mt-3">
+							{{ form_label(form.plainPassword.second, 'Passwort wiederholen') }}
+							{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
+							{{ form_errors(form.plainPassword.second) }}
+						</div>
+					</div>
+				</div>
+				<div class="form-group mt-3">
+					<button type="button" class="btn btn-secondary" id="edit-button">Bearbeiten</button>
+					<button type="submit" class="btn btn-primary" id="save-button" style="display: none;">Speichern</button>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById('edit-button').addEventListener('click', function () {
+var inputs = document.querySelectorAll('input[readonly]');
+inputs.forEach(function (input) {
+input.removeAttribute('readonly');
+});
+document.getElementById('edit-button').style.display = 'none';
+document.getElementById('save-button').style.display = 'inline-block';
+});
+	</script>
+{% endblock %}
