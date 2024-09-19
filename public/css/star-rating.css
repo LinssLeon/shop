@@ -1,0 +1,29 @@
+.star-rating {
+    display: inline-block;
+    position: relative;
+    font-size: 2rem !important;
+    /* Größe der Sterne anpassen */
+    color: #e0e0e0 !important;
+    /* Standardfarbe der Sterne */
+    cursor: pointer;
+    /* Zeiger als Hand anzeigen */
+}
+
+.star-rating .fa-star {
+    color: #e0e0e0 !important;
+    /* Standardfarbe der Sterne */
+    transition: color 0.3s ease;
+    /* Sanfter Übergang der Farbe */
+}
+
+/* Die Farbe der Sterne basierend auf der Position des Mauszeigers */
+.star-rating:hover .fa-star {
+    color: #e0e0e0 !important;
+    /* Standardfarbe der Sterne */
+}
+
+.star-rating:hover .fa-star:hover,
+.star-rating:hover .fa-star:hover~.fa-star {
+    color: #ffcc00 !important;
+    /* Farbe beim Hover */
+}

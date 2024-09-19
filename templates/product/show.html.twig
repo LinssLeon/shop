@@ -33,10 +33,84 @@
 		</div>
 	</section>
 
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Online Shop
-				{{ "now"|date("Y") }}</p>
+	<section class="py-5">
+		<div class="container px-4 px-lg-5 mt-5">
+			<h2>Bewertung</h2>
+			{% for review in reviews %}
+				<div class="mb-4 review-box">
+					<p>Sterne:
+						<div class="star-rating">
+							{% for i in 1..5 %}
+								<span class="fa fa-star" data-rating="{{ i }}"></span>
+							{% endfor %}
+						</div>
+					</p>
+				</div>
+				<input type="hidden" id="new_rating" name="rating" value="">
+			</p>
+			<strong>{{ review.title }}</strong>
+			<p>{{ review.comment }}</p>
+			<p>Von
+				{{ review.user.fullName }}
+				am:
+				{{ review.createdAt|date('d.m.Y H:i') }}</p>
+			{% if review.user == app.user %}
+				<a href="{{ path('product_show', { 'id': product.id, 'editReviewId': review.id }) }}" class="btn btn-primary btn-sm">Bearbeiten</a>
+				<a href="{{ path('review_delete', { 'id': review.id }) }}" class="btn btn-danger btn-sm" onclick="return confirm('Möchten Sie diese Bewertung wirklich löschen?');">Löschen</a>
+			{% endif %}
 		</div>
-	</footer>
-{% endblock %}
+		{% if editReviewId == review.id %}
+			<div class="mb-4 review-box">
+				<h3>Bewertung bearbeiten</h3>
+				{{ form_start(editReviewForm, {'action': path('product_show', {'id': product.id, 'editReviewId': review.id})}) }}
+				<div class="mb-3">
+					<label for="edit_rating_{{ review.id }}">Sterne:</label>
+					<div class="star-rating" data-input-id="edit_rating_{{ review.id }}">
+						{% for i in 1..5 %}
+							<span class="fa fa-star {% if i <= review.rating %}text-warning{% else %}text-secondary{% endif %}" data-rating="{{ i }}"></span>
+						{% endfor %}
+					</div>
+					{{ form_widget(editReviewForm.rating, {'attr': {'class': 'd-none', 'id': 'edit_rating_' ~ review.id}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_label(editReviewForm.title) }}
+					{{ form_widget(editReviewForm.title, {'attr': {'class': 'form-control'}}) }}
+				</div>
+				<div class="mb-3">
+					{{ form_label(editReviewForm.comment) }}
+					{{ form_widget(editReviewForm.comment, {'attr': {'class': 'form-control'}}) }}
+				</div>
+				<button type="submit" class="btn btn-outline-dark">Speichern</button>
+				{{ form_end(editReviewForm) }}
+			</div>
+		{% endif %}
+	{% endfor %}
+
+	<h2>Verfasse eine Bewertung</h2>
+	<div class="mb-4 review-box">
+		{{ form_start(reviewForm) }}
+		<div class="mb-3">
+			<label for="new_rating">Sterne:</label>
+			<div class="star-rating" data-input-id="new_rating">
+				{% for i in 1..5 %}
+					<span class="fa fa-star text-secondary" data-rating="{{ i }}"></span>
+				{% endfor %}
+			</div>
+			<input type="hidden" id="new_rating" name="rating" value="">
+		</div>
+		<div class="mb-3">
+			{{ form_label(reviewForm.title) }}
+			{{ form_widget(reviewForm.title, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<div class="mb-3">
+			{{ form_label(reviewForm.comment) }}
+			{{ form_widget(reviewForm.comment, {'attr': {'class': 'form-control'}}) }}
+		</div>
+		<button type="submit" class="btn btn-outline-dark">Absenden</button>
+		{{ form_end(reviewForm) }}
+	</div>
+</div></section><footer class="py-5 bg-dark">
+<div class="container">
+	<p class="m-0 text-center text-white">Copyright &copy; Online Shop
+		{{ "now"|date("Y") }}</p>
+</div></footer>{% endblock %}
