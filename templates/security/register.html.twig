@@ -1,71 +1,68 @@
-{# templates/security/register.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Registrieren
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-5 d-flex flex-column min-vh-100">
-		<h2 class="text-center">Registrieren</h2>
-		<div class="row justify-content-center flex-grow-1">
+	<div class="container mx-auto mt-5 d-flex flex-col min-h-screen">
+		<h2 class="text-center text-2xl font-bold">Registrieren</h2>
+		<div class="row justify-center flex-grow">
 			<div class="col-md-8">
 				{{ form_start(registrationForm) }}
 				<div class="row">
 					<div class="col-md-6">
-						<div class="form-group">
-							<br>
-							{{ form_label(registrationForm.firstName, 'Vorname') }}
-							{{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.firstName, 'Vorname', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.firstName) }}
 						</div>
 
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.lastName, 'Nachname') }}
-							{{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.lastName, 'Nachname', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.lastName) }}
 						</div>
 
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.email, 'E-Mail') }}
-							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.email, 'E-Mail', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.email) }}
 						</div>
 
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.address, 'Adresse') }}
-							{{ form_widget(registrationForm.address, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.address, 'Adresse', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.address, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.address) }}
 						</div>
 					</div>
 					<div class="col-md-6">
-						<div class="form-group mt-4">
-							{{ form_label(registrationForm.postalCode, 'Postleitzahl') }}
-							{{ form_widget(registrationForm.postalCode, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.postalCode, 'Postleitzahl', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.postalCode, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.postalCode) }}
 						</div>
 
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.city, 'Stadt') }}
-							{{ form_widget(registrationForm.city, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.city, 'Stadt', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.city, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.city) }}
 						</div>
 
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.plainPassword.first, 'Passwort') }}
-							{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.plainPassword.first, 'Passwort', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.plainPassword.first) }}
 						</div>
 
-						<div class="form-group mt-3">
-							{{ form_label(registrationForm.plainPassword.second, 'Passwort wiederholen') }}
-							{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+						<div class="mb-4">
+							{{ form_label(registrationForm.plainPassword.second, 'Passwort wiederholen', {'label_attr': {'class': 'block text-sm font-medium'}}) }}
+							{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control mt-1 block w-full p-2 border border-gray-300 rounded'}}) }}
 							{{ form_errors(registrationForm.plainPassword.second) }}
 						</div>
 					</div>
 				</div>
-				<div class="form-group mt-3">
-					<button type="submit" class="btn btn-primary">Registrieren</button>
+				<div class="mb-4">
+					<button type="submit" class="btn btn-primary px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Registrieren</button>
 				</div>
 				{{ form_end(registrationForm) }}
 			</div>

@@ -8,124 +8,140 @@
 			{% endblock %}
 		</title>
 		<link rel="icon" href="{{ asset('/images/favicon.ico') }}" type="image/x-icon">
-		<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/smooth-slide.css') }}">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-		<link rel="stylesheet" href="{{ asset('css/star-rating.css') }}"> {% block stylesheets %}{% endblock %}
+		<link rel="stylesheet" href="{{ asset('css/star-rating.css') }}">
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> {% block stylesheets %}{% endblock %}
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 	</head>
-	<body>
+	<body
+		class="flex flex-col min-h-screen">
+
 		<!-- Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light py-4 position-relative" style="z-index: 1;">
-			<div class="container px-4 px-lg-5">
-				<a class="navbar-brand" href="/">Online Shop</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<nav class="bg-light py-4 relative z-10">
+			<div class="container mx-auto px-4 lg:px-5 flex justify-between items-center">
+				<a class="text-xl font-bold" href="/">Online Shop</a>
+				<button class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="/">Home</a>
+				<div class="hidden md:flex md:items-center md:space-x-4 ml-10">
+					<ul class="flex space-x-4">
+						<li>
+							<a class="text-gray-700 hover:text-blue-500" aria-current="page" href="/">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{ path('about') }}">Über uns</a>
+						<li>
+							<a class="text-gray-700 hover:text-blue-500" href="{{ path('about') }}">Über uns</a>
 						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li class="relative group">
+							<a class="text-gray-700 hover:text-blue-500 cursor-pointer flex items-center" id="shopDropdownToggle">
+								Shop
+								<svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+								</svg>
+							</a>
+							<ul class="absolute hidden bg-white shadow-md mt-1 rounded w-48" id="shopDropdownMenu">
 								<li>
-									<a class="dropdown-item" href="{{ path('product_index') }}">Alle Produkte</a>
+									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="{{ path('product_index') }}">Alle Produkte</a>
 								</li>
-								<li><hr class="dropdown-divider"/></li>
+								<li><hr class="my-1"></li>
 								<li>
-									<a class="dropdown-item" href="#!">Beliebte Produkte</a>
+									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#!">Beliebte Produkte</a>
 								</li>
 								<li>
-									<a class="dropdown-item" href="#!">Neuheiten</a>
+									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#!">Neuheiten</a>
 								</li>
 							</ul>
 						</li>
 					</ul>
-					<ul class="navbar-nav ms-auto">
-						{% if app.user %}
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle fw-bold text-dark" id="userDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Hallo,
-									{{ app.user.firstName }}
-									{{ app.user.lastName }}
-									😄
-								</a>
-								<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-									<li>
-										<a class="dropdown-item" href="{{ path('account') }}">Konto</a>
-									</li>
-									<li><hr class="dropdown-divider"/></li>
-									<li>
-										<a class="dropdown-item" href="{{ path('app_logout') }}">Ausloggen</a>
-									</li>
-								</ul>
-							</li>
-						{% else %}
-							<li class="nav-item">
-								<a class="btn btn-outline-dark me-2" href="{{ path('app_login') }}">Einloggen</a>
-							</li>
-							<li class="nav-item">
-								<a class="btn btn-outline-dark me-2" href="{{ path('app_register') }}">Registrieren</a>
-							</li>
-						{% endif %}
-						<li class="nav-item">
-							<a class="btn btn-outline-dark" href="{{ path('cart') }}">
-								<i class="bi-cart-fill me-1"></i>
-								Warenkorb
-								<span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart_quantity() }}</span>
+				</div>
+				<div class="flex items-center space-x-4 ml-auto">
+					{% if app.user %}
+						<div class="relative group">
+							<a class="text-dark font-bold cursor-pointer flex items-center" id="userDropdownToggle">
+								Hallo,
+								{{ app.user.firstName }}
+								{{ app.user.lastName }}
+								😄
+								<svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+								</svg>
 							</a>
-						</li>
-					</ul>
+							<ul class="absolute hidden bg-white shadow-md mt-1 rounded w-48" id="userDropdownMenu">
+								<li>
+									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="{{ path('account') }}">Konto</a>
+								</li>
+								<li><hr class="my-1"></li>
+								<li>
+									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="{{ path('app_logout') }}">Ausloggen</a>
+								</li>
+							</ul>
+						</div>
+					{% else %}
+						<a class="btn border border-gray-700 text-gray-700 hover:bg-gray-100" href="{{ path('app_login') }}">Einloggen</a>
+						<a class="btn border border-gray-700 text-gray-700 hover:bg-gray-100" href="{{ path('app_register') }}">Registrieren</a>
+					{% endif %}
+					<a class="relative flex items-center text-gray-700 hover:text-blue-500" href="{{ path('cart') }}">
+						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.6 8H18M7 13l1.6-8H21M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"></path>
+						</svg>
+						<span class="ml-2">Warenkorb</span>
+						<span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full text-xs px-2 py-1">{{ cart_quantity() }}</span>
+					</a>
 				</div>
 			</div>
 		</nav>
 
-		{% block body %}{% endblock %}
+		<!-- Main Content -->
+		<main class="flex-grow"> {% block body %}{% endblock %}
+			</main>
 
-		<!-- Footer -->
-		<footer class="py-5 bg-dark text-white">
-			<div class="container text-center">
-				<h2 class="mb-4">Willkommen in unserem Online-Shop!</h2>
-				<p class="lead mb-4">Hier sind unsere besonderen Produkte:</p>
-				<div class="row">
-					<div class="col-md-4">
-						<h5>Kontakt</h5>
-						<p>Email: info@onlineshop.com</p>
-						<p>Telefon: +49 123 456 789</p>
+			<!-- Footer -->
+			<footer class="bg-gray-800 text-white py-8">
+				<div class="container mx-auto px-4">
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+						<div>
+							<h5 class="text-lg font-semibold mb-4">Kontakt</h5>
+							<p>Email:
+								<a href="mailto:info@onlineshop.com" class="text-blue-400 hover:underline">info@onlineshop.com</a>
+							</p>
+							<p>Telefon:
+								<a href="tel:+49123456789" class="text-blue-400 hover:underline">+49 123 456 789</a>
+							</p>
+						</div>
+						<div>
+							<h5 class="text-lg font-semibold mb-4">Folgen Sie uns</h5>
+							<div class="flex space-x-4">
+								<a href="#" class="text-white hover:text-blue-400">
+									<i class="fab fa-facebook-f"></i>
+								</a>
+								<a href="#" class="text-white hover:text-blue-400">
+									<i class="fab fa-twitter"></i>
+								</a>
+								<a href="#" class="text-white hover:text-blue-400">
+									<i class="fab fa-instagram"></i>
+								</a>
+							</div>
+						</div>
+						<div>
+							<h5 class="text-lg font-semibold mb-4">Rechtliches</h5>
+							<ul>
+								<li><a href="#" class="text-blue-400 hover:underline">Datenschutz</a></li>
+								<li><a href="#" class="text-blue-400 hover:underline">Impressum</a></li>
+							</ul>
+						</div>
 					</div>
-					<div class="col-md-4">
-						<h5>Folgen Sie uns</h5>
-						<a href="#" class="text-white me-2">
-							<i class="fab fa-facebook-f"></i>
-						</a>
-						<a href="#" class="text-white me-2">
-							<i class="fab fa-twitter"></i>
-						</a>
-						<a href="#" class="text-white me-2">
-							<i class="fab fa-instagram"></i>
-						</a>
-					</div>
-					<div class="col-md-4">
-						<h5>Rechtliches</h5>
-						<a href="#" class="text-white d-block">Datenschutz</a>
-						<a href="#" class="text-white d-block">Impressum</a>
+					<hr class="my-8 border-gray-700">
+					<div class="text-center">
+						<p>&copy; Online Shop
+							{{ "now"|date("Y") }}</p>
 					</div>
 				</div>
-				<hr class="my-4">
-				<p class="m-0">&copy; Online Shop
-					{{ "now"|date("Y") }}</p>
-			</div>
-		</footer>
+			</footer>
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-		<script src="{{ asset('dropdown-hover.js') }}"></script>
-		<script src="{{ asset('scripts.js') }}"></script>
-		{% block javascripts %}{% endblock %}
-	</body>
-</html>
+			<script src="{{ asset('dropdown-hover.js') }}"></script>
+			<script src="{{ asset('star-rating.js') }}"></script>
+			<script src="{{ asset('js/dropdown.js') }}"></script>
+			{% block javascripts %}{% endblock %}
+			{{ encore_entry_script_tags('app') }}
+		</body>
+	</html>

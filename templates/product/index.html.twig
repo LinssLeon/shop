@@ -4,15 +4,15 @@
 {% endblock %}
 
 {% block body %}
-	<div class="bg-dark text-white py-5">
-		<div class="container mt-5">
-			<h1 class="mb-4 text-center">Alle Produkte</h1>
+	<div class="bg-gray-800 text-white py-5">
+		<div class="container mx-auto mt-5">
+			<h1 class="mb-4 text-center text-3xl font-bold">Alle Produkte</h1>
 
 			<!-- Optional: Filterformular -->
 			<form method="get" action="{{ path('product_index') }}" class="mb-4">
-				<div class="row">
-					<div class="col-md-4">
-						<select name="category" class="form-select">
+				<div class="flex justify-center">
+					<div class="mr-2">
+						<select name="category" class="form-select block w-full p-2 rounded border border-gray-300">
 							<option value="">Alle Kategorien</option>
 							{% for category in categories %}
 								<option value="{{ category.id }}" {% if app.request.query.get('category') == category.id %} selected {% endif %}>
@@ -21,23 +21,23 @@
 							{% endfor %}
 						</select>
 					</div>
-					<div class="col-md-2">
-						<button type="submit" class="btn btn-primary">Filtern</button>
+					<div>
+						<button type="submit" class="btn btn-primary px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Filtern</button>
 					</div>
 				</div>
 			</form>
 
 			{% if selectedCategory %}
-				<h2 class="text-center my-4">{{ selectedCategory.name }}</h2>
-				<div class="row">
+				<h2 class="text-center my-4 text-2xl">{{ selectedCategory.name }}</h2>
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
 					{% for product in products %}
-						<div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
-							<div class="card h-100 d-flex flex-column text-center bg-light text-dark">
-								<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="card-img-top img-fluid" alt="{{ product.name }}">
-								<div class="card-body d-flex flex-column">
-									<h5 class="card-title">{{ product.name }}</h5>
-									<p class="card-text">{{ product.price|number_format(2, ',', '.') }}€</p>
-									<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-primary mt-auto">Zum Produkt</a>
+						<div class="mb-4">
+							<div class="card h-100 d-flex flex-col text-center bg-white text-dark rounded-lg shadow-md">
+								<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="card-img-top w-full h-48 object-cover rounded-t-lg" alt="{{ product.name }}">
+								<div class="card-body flex flex-col">
+									<h5 class="card-title font-semibold">{{ product.name }}</h5>
+									<p class="card-text font-bold">{{ product.price|number_format(2, ',', '.') }}€</p>
+									<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-primary mt-auto rounded bg-blue-600 text-white hover:bg-blue-700">Zum Produkt</a>
 								</div>
 							</div>
 						</div>
@@ -45,17 +45,17 @@
 				</div>
 			{% else %}
 				{% for category in categories %}
-					<h2 class="text-center my-4">{{ category.name }}</h2>
-					<div class="row">
+					<h2 class="text-center my-4 text-2xl">{{ category.name }}</h2>
+					<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
 						{% for product in products %}
 							{% if product.category.id == category.id %}
-								<div class="col-6 col-md-4 col-lg-3 col-xl-2 mb-4">
-									<div class="card h-100 d-flex flex-column text-center bg-light text-dark">
-										<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="card-img-top img-fluid" alt="{{ product.name }}">
-										<div class="card-body d-flex flex-column">
-											<h5 class="card-title">{{ product.name }}</h5>
-											<p class="card-text">{{ product.price|number_format(2, ',', '.') }}€</p>
-											<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-primary mt-auto">Zum Produkt</a>
+								<div class="mb-4">
+									<div class="card h-100 d-flex flex-col text-center bg-white text-dark rounded-lg shadow-md">
+										<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="card-img-top w-full h-48 object-cover rounded-t-lg" alt="{{ product.name }}">
+										<div class="card-body flex flex-col">
+											<h5 class="card-title font-semibold">{{ product.name }}</h5>
+											<p class="card-text font-bold">{{ product.price|number_format(2, ',', '.') }}€</p>
+											<a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-primary mt-auto rounded bg-blue-600 text-white hover:bg-blue-700">Zum Produkt</a>
 										</div>
 									</div>
 								</div>
