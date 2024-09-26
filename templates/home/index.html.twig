@@ -5,40 +5,44 @@
 
 {% block body %}
 	<!-- Willkommensnachricht -->
-	<div class="text-center p-5" style="background-color: #343a40; color: white;">
-		<h1>Willkommen in unserem Online-Shop!</h1>
-		<p class="lead">Entdecken Sie unsere exklusiven Angebote und besonderen Produkte.</p>
+	<div class="text-center p-5 bg-gray-800 text-white">
+		<h1 class="text-4xl font-bold">Willkommen in unserem Online-Shop!</h1>
+		<p class="lead text-lg">Entdecken Sie unsere exklusiven Angebote und besonderen Produkte.</p>
 	</div>
 
 	<!-- Slideshow für Featured-Produkte -->
-	<div id="featuredProductsCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
-		<div class="carousel-inner">
-			{% for product in featuredProducts %}
-				<div class="carousel-item {% if loop.first %}active{% endif %}">
-					<a href="{{ path('product_show', { 'id': product.id }) }}">
-						<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="d-block w-100" style="object-fit: contain; max-height: 400px;" alt="{{ product.name }}">
-					</a>
-					<div class="carousel-caption d-md-block text-dark bg-light p-3" style="position: static; border-radius: 10px;">
-						<h5>{{ product.name }}</h5>
-						<p>{{ product.price|number_format(2, ',', '.') }}€</p>
-						<a class="btn btn-primary mt-3" href="{{ path('product_show', { 'id': product.id }) }}">Zum Produkt</a>
+	<div class="relative mt-4">
+		<div class="overflow-hidden relative h-96">
+			<div class="flex transition-transform duration-500 ease-in-out" id="slider">
+				{% for product in featuredProducts %}
+					<div class="min-w-full relative flex flex-col items-center">
+						<a href="{{ path('product_show', { 'id': product.id }) }}">
+							<img src="{{ asset('uploads/images/products/' ~ product.image) }}" class="max-w-full max-h-80 object-contain" alt="{{ product.name }}">
+						</a>
+						<div class="text-center p-4">
+							<h5 class="font-semibold">{{ product.name }}</h5>
+							<p class="font-bold">{{ product.price|number_format(2, ',', '.') }}€</p>
+							<a class="bg-blue-500 text-white px-4 py-2 rounded mt-3 inline-block" href="{{ path('product_show', { 'id': product.id }) }}">Zum Produkt</a>
+						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			</div>
 		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="prev" style="z-index: 11; background-color: transparent; border: none;">
-			<span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black; width: 30px; height: 30px;"></span>
-			<span class="visually-hidden">Previous</span>
+		<button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" id="prevBtn">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+			</svg>
 		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide="next" style="z-index: 11; background-color: transparent; border: none;">
-			<span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black; width: 30px; height: 30px;"></span>
-			<span class="visually-hidden">Next</span>
+		<button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full" id="nextBtn">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+			</svg>
 		</button>
-		<!-- Indikatoren -->
-		<div class="carousel-indicators" style="position: static; margin-top: 10px;">
-			{% for product in featuredProducts %}
-				<button type="button" data-bs-target="#featuredProductsCarousel" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}" aria-current="{% if loop.first %}true{% endif %}" aria-label="Slide {{ loop.index }}" style="background-color: #343a40;"></button>
-			{% endfor %}
-		</div>
 	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/slider.js') }}"></script>
 {% endblock %}

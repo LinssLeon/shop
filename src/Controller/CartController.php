@@ -73,4 +73,13 @@ class CartController extends AbstractController
         $this->cartService->clearCart();
         return $this->redirectToRoute('cart');
     }
+
+    #[Route('/cart/apply-coupon', name: 'apply_coupon', methods: ['POST'])]
+    public function applyCoupon(Request $request): Response
+    {
+        $couponCode = $request->request->get('coupon_code');
+        // Logik zum Verarbeiten des Gutscheincodes...
+
+        return $this->redirectToRoute('cart');
+    }
 }
