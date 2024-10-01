@@ -1,145 +1,58 @@
-<!DOCTYPE html>
-<html lang="de">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>
-			{% block title %}Online-Shop
-			{% endblock %}
-		</title>
-		<link rel="icon" href="{{ asset('/images/favicon.ico') }}" type="image/x-icon">
-		<link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
-		<link rel="stylesheet" href="{{ asset('css/smooth-slide.css') }}">
-		<link rel="stylesheet" href="{{ asset('css/star-rating.css') }}">
-		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> {% block stylesheets %}{% endblock %}
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	</head>
-	<body
-		class="flex flex-col min-h-screen">
+{% extends 'base.html.twig' %}
 
-		<!-- Navigation -->
-		<nav class="bg-light py-4 relative z-10">
-			<div class="container mx-auto px-4 lg:px-5 flex justify-between items-center">
-				<a class="text-xl font-bold" href="/">Online Shop</a>
-				<button class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="hidden md:flex md:items-center md:space-x-4 ml-10">
-					<ul class="flex space-x-4">
-						<li>
-							<a class="text-gray-700 hover:text-blue-500" aria-current="page" href="/">Home</a>
-						</li>
-						<li>
-							<a class="text-gray-700 hover:text-blue-500" href="{{ path('about') }}">Über uns</a>
-						</li>
-						<li class="relative group">
-							<a class="text-gray-700 hover:text-blue-500 cursor-pointer flex items-center" id="shopDropdownToggle">
-								Shop
-								<svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-								</svg>
-							</a>
-							<ul class="absolute hidden bg-white shadow-md mt-1 rounded w-48" id="shopDropdownMenu">
-								<li>
-									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="{{ path('product_index') }}">Alle Produkte</a>
-								</li>
-								<li><hr class="my-1"></li>
-								<li>
-									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#!">Beliebte Produkte</a>
-								</li>
-								<li>
-									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#!">Neuheiten</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-				<div class="flex items-center space-x-4 ml-auto">
-					{% if app.user %}
-						<div class="relative group">
-							<a class="text-dark font-bold cursor-pointer flex items-center" id="userDropdownToggle">
-								Hallo,
-								{{ app.user.firstName }}
-								{{ app.user.lastName }}
-								😄
-								<svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-								</svg>
-							</a>
-							<ul class="absolute hidden bg-white shadow-md mt-1 rounded w-48" id="userDropdownMenu">
-								<li>
-									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="{{ path('account') }}">Konto</a>
-								</li>
-								<li><hr class="my-1"></li>
-								<li>
-									<a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="{{ path('app_logout') }}">Ausloggen</a>
-								</li>
-							</ul>
-						</div>
-					{% else %}
-						<a class="btn border border-gray-700 text-gray-700 hover:bg-gray-100" href="{{ path('app_login') }}">Einloggen</a>
-						<a class="btn border border-gray-700 text-gray-700 hover:bg-gray-100" href="{{ path('app_register') }}">Registrieren</a>
-					{% endif %}
-					<a class="relative flex items-center text-gray-700 hover:text-blue-500" href="{{ path('cart') }}">
-						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.6 8H18M7 13l1.6-8H21M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"></path>
-						</svg>
-						<span class="ml-2">Warenkorb</span>
-						<span class="ml-2 bg-red-500 text-white rounded-full text-xs px-2 py-1">{{ cart_quantity() }}</span>
-					</a>
+{% block title %}Warenkorb
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto mt-5 flex flex-col min-h-screen">
+		<h2 class="text-center text-3xl font-bold mb-6">Warenkorb</h2>
+		{% if cartItems|length > 0 %}
+			<div class="bg-white p-6 rounded-lg shadow-md">
+				<table class="min-w-full bg-white border border-gray-300">
+					<thead>
+						<tr class="border-b border-gray-300 bg-gray-100">
+							<th class="py-2 text-center">Produkt</th>
+							<th class="py-2 text-center">Preis</th>
+							<th class="py-2 text-center">Menge</th>
+							<th class="py-2 text-center">Gesamt</th>
+							<th class="py-2 text-center">Aktionen</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in cartItems %}
+							<tr class="border-b border-gray-300 {% if loop.index is odd %}bg-gray-50{% else %}bg-white{% endif %}">
+								<td class="py-2 flex items-center justify-center">
+									<img src="{{ asset('uploads/images/products/' ~ item.product.image) }}" alt="{{ item.product.name }}" class="w-16 h-16 object-cover rounded-md mr-4">
+									<span>{{ item.product.name }}</span>
+								</td>
+								<td class="py-2 text-center">{{ item.product.price|number_format(2, ',', '.') }}
+									€</td>
+								<td class="py-2 text-center">
+									<form action="{{ path('cart_update', {'productId': item.product.id}) }}" method="post" class="flex items-center justify-center">
+										<input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="w-16 text-center border border-gray-300 rounded-md mr-2">
+										<button type="submit" class="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600">Aktualisieren</button>
+									</form>
+								</td>
+								<td class="py-2 text-center">{{ (item.product.price * item.quantity)|number_format(2, ',', '.') }}
+									€</td>
+								<td class="py-2 text-center">
+									<form action="{{ path('cart_remove', {'productId': item.product.id}) }}" method="post">
+										<button type="submit" class="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600">Entfernen</button>
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="mt-6 flex flex-col items-end">
+					<p class="text-lg font-bold mb-4">Gesamtsumme:
+						{{ total|number_format(2, ',', '.') }}
+						€</p>
+					<a href="{{ path('order_place') }}" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105">Zur Kasse</a>
 				</div>
 			</div>
-		</nav>
-
-		<!-- Main Content -->
-		<main class="flex-grow"> {% block body %}{% endblock %}
-			</main>
-
-			<!-- Footer -->
-			<footer class="bg-gray-800 text-white py-8">
-				<div class="container mx-auto px-4">
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-						<div>
-							<h5 class="text-lg font-semibold mb-4">Kontakt</h5>
-							<p>Email:
-								<a href="mailto:info@onlineshop.com" class="text-blue-400 hover:underline">info@onlineshop.com</a>
-							</p>
-							<p>Telefon:
-								<a href="tel:+49123456789" class="text-blue-400 hover:underline">+49 123 456 789</a>
-							</p>
-						</div>
-						<div>
-							<h5 class="text-lg font-semibold mb-4">Folgen Sie uns</h5>
-							<div class="flex space-x-4">
-								<a href="#" class="text-white hover:text-blue-400">
-									<i class="fab fa-facebook-f"></i>
-								</a>
-								<a href="#" class="text-white hover:text-blue-400">
-									<i class="fab fa-twitter"></i>
-								</a>
-								<a href="#" class="text-white hover:text-blue-400">
-									<i class="fab fa-instagram"></i>
-								</a>
-							</div>
-						</div>
-						<div>
-							<h5 class="text-lg font-semibold mb-4">Rechtliches</h5>
-							<ul>
-								<li><a href="#" class="text-blue-400 hover:underline">Datenschutz</a></li>
-								<li><a href="#" class="text-blue-400 hover:underline">Impressum</a></li>
-							</ul>
-						</div>
-					</div>
-					<hr class="my-8 border-gray-700">
-					<div class="text-center">
-						<p>&copy; Online Shop
-							{{ "now"|date("Y") }}</p>
-					</div>
-				</div>
-			</footer>
-
-			<script src="{{ asset('js/dropdown.js') }}"></script>
-			{% block javascripts %}{% endblock %}
-			{{ encore_entry_script_tags('app') }}
-		</body>
-	</html>
+		{% else %}
+			<p class="text-center text-lg">Ihr Warenkorb ist leer.</p>
+		{% endif %}
+	</div>
+{% endblock %}

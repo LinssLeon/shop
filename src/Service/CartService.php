@@ -125,4 +125,15 @@ class CartService
 
         return $cartQuantity;
     }
+    public function getTotal(): float
+    {
+        $customer = $this->security->getUser();
+        $cartItems = $this->cartItemRepository->findBy(['customer' => $customer]);
+
+        $total = array_reduce($cartItems, function ($carry, $item) {
+            return $carry + ($item->getProduct()->getPrice() * $item->getQuantity());
+        }, 0);
+
+        return $total;
+    }
 }

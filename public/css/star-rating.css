@@ -1,0 +1,17 @@
+/* public/css/star-rating.css */
+.star-rating .fa-star {
+    font-size: 2rem;
+    /* Größe der Sterne */
+    cursor: pointer;
+    /* Zeiger ändern */
+}
+
+.star-rating .fa-star.text-warning {
+    color: #ffc107;
+    /* Farbe für ausgewählte Sterne */
+}
+
+.star-rating .fa-star.text-secondary {
+    color: #e4e5e9;
+    /* Farbe für nicht ausgewählte Sterne */
+}

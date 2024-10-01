@@ -18,3 +18,7 @@ admin_product_index:
 admin_product_new:
     path: /admin/product/new
     controller: App\Controller\Admin\ProductCrudController::new
+
+order_place:
+    path: /order/place
+    controller: App\Controller\OrderController::placeOrder
