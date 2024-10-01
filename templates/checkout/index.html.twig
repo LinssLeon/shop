@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto mt-5 flex flex-col min-h-screen">
+		<h2 class="text-center text-3xl font-bold mb-6">Checkout</h2>
+		<div class="bg-white p-6 rounded-lg shadow-md">
+			<h3 class="text-2xl font-bold mb-4">Bestellübersicht</h3>
+			<table class="min-w-full bg-white border border-gray-300">
+				<thead>
+					<tr class="border-b border-gray-300 bg-gray-100">
+						<th class="py-2 text-center">Produkt</th>
+						<th class="py-2 text-center">Preis</th>
+						<th class="py-2 text-center">Menge</th>
+						<th class="py-2 text-center">Gesamt</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in cartItems %}
+						<tr class="border-b border-gray-300 {% if loop.index is odd %}bg-gray-50{% else %}bg-white{% endif %}">
+							<td class="py-2 flex items-center justify-center">
+								<img src="{{ asset('uploads/images/products/' ~ item.product.image) }}" alt="{{ item.product.name }}" class="w-16 h-16 object-cover rounded-md mr-4">
+								<span>{{ item.product.name }}</span>
+							</td>
+							<td class="py-2 text-center">{{ item.product.price|number_format(2, ',', '.') }}
+								€</td>
+							<td class="py-2 text-center">{{ item.quantity }}</td>
+							<td class="py-2 text-center">{{ (item.product.price * item.quantity)|number_format(2, ',', '.') }}
+								€</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="mt-6 text-right">
+				<p class="text-lg font-bold mb-4">Gesamtsumme:
+					{{ total|number_format(2, ',', '.') }}
+					€</p>
+			</div>
+			<div class="mt-6">
+				<h3 class="text-2xl font-bold mb-4">Lieferadresse</h3>
+				<form action="{{ path('order_place') }}" method="post">
+					<div class="mb-4">
+						<label class="block text-lg font-medium text-gray-700">Name</label>
+						<input type="text" name="name" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm" required>
+					</div>
+					<div class="mb-4">
+						<label class="block text-lg font-medium text-gray-700">Adresse</label>
+						<input type="text" name="address" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm" required>
+					</div>
+					<div class="mb-4">
+						<label class="block text-lg font-medium text-gray-700">Stadt</label>
+						<input type="text" name="city" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm" required>
+					</div>
+					<div class="mb-4">
+						<label class="block text-lg font-medium text-gray-700">Postleitzahl</label>
+						<input type="text" name="postal_code" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm" required>
+					</div>
+					<div class="mt-6 text-right">
+						<button type="submit" class="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105">Bestellung abschließen</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

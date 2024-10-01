@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/smooth-slide.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/star-rating.css') }}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> {% block stylesheets %}{% endblock %}
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	</head>
@@ -77,15 +78,15 @@
 							</ul>
 						</div>
 					{% else %}
-						<a class="btn border border-gray-700 text-gray-700 hover:bg-gray-100" href="{{ path('app_login') }}">Einloggen</a>
-						<a class="btn border border-gray-700 text-gray-700 hover:bg-gray-100" href="{{ path('app_register') }}">Registrieren</a>
+						<a class="btn bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" href="{{ path('app_login') }}">Einloggen</a>
+						<a class="btn bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600" href="{{ path('app_register') }}">Registrieren</a>
 					{% endif %}
 					<a class="relative flex items-center text-gray-700 hover:text-blue-500" href="{{ path('cart') }}">
 						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.6 8H18M7 13l1.6-8H21M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"></path>
 						</svg>
 						<span class="ml-2">Warenkorb</span>
-						<span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full text-xs px-2 py-1">{{ cart_quantity() }}</span>
+						<span class="ml-2 bg-red-500 text-white rounded-full text-xs px-2 py-1">{{ cart_quantity() }}</span>
 					</a>
 				</div>
 			</div>
@@ -138,10 +139,10 @@
 				</div>
 			</footer>
 
-			<script src="{{ asset('dropdown-hover.js') }}"></script>
-			<script src="{{ asset('star-rating.js') }}"></script>
 			<script src="{{ asset('js/dropdown.js') }}"></script>
-			{% block javascripts %}{% endblock %}
+			{% block javascripts %}
+				<script src="{{ asset('js/account.js') }}"></script>
+			{% endblock %}
 			{{ encore_entry_script_tags('app') }}
 		</body>
 	</html>
